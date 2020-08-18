@@ -2,7 +2,6 @@ package com.bins.controller;
 
 import com.bins.bean.Type;
 import com.bins.service.TypeService;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("admin/types")
@@ -26,6 +24,7 @@ public class TypeController {
     public String list(@PageableDefault(size = 5,sort = {"id"},direction = Sort.Direction.ASC) Pageable pageable, Model model){//利用Model对象向浏览器传递数据
 
         Page<Type> page = typeService.findAll(pageable);
+
         model.addAttribute("page",page);
         return "admin/types";
     }
