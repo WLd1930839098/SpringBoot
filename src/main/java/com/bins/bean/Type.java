@@ -11,7 +11,7 @@ import java.util.List;
 public class Type {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue //使id自增
     private Long id;
 
     private String name;
