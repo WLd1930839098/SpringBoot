@@ -1,0 +1,57 @@
+package com.bins.service.impl;
+
+import com.bins.bean.Tag;
+import com.bins.dao.TagDao;
+import com.bins.service.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class TagServiceImpl implements TagService {
+
+    @Autowired
+    private TagDao tagDao;
+
+    @Override
+    public Page<Tag> findAll(Pageable pageable) {
+        return tagDao.findAll(pageable);
+    }
+
+    @Override
+    public Tag findById(Long id) {
+        return tagDao.getOne(id);
+    }
+
+    @Override
+    public void input(Tag tag) {
+        tagDao.save(tag);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        tagDao.deleteById(id);
+    }
+
+    @Override
+    public List<Tag> findAll() {
+        return tagDao.findAll();
+    }
+
+    @Override
+    public List<Tag> findByIds(String tagIds) {
+        List<Long> ids = new ArrayList<>();
+        if(!StringUtils.isEmpty(tagIds)){
+            String[] strings = tagIds.split(",");
+            for(String s:strings){
+                ids.add(Long.parseLong(s));
+            }
+        }
+        return tagDao.findAllById(ids);
+    }
+}

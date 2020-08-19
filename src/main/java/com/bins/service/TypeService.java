@@ -14,4 +14,6 @@ public interface TypeService {
     void add(Type type);
 
     Type findById(Long id);
+
+    List<Type> findAll();
 }

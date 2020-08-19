@@ -37,4 +37,9 @@ public class TypeServiceImpl implements TypeService {
     public Type findById(Long id) {
         return typeDao.getOne(id);
     }
+
+    @Override
+    public List<Type> findAll() {
+        return typeDao.findAll();
+    }
 }
