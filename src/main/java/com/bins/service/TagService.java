@@ -18,4 +18,6 @@ public interface TagService {
     List<Tag> findAll();
 
     List<Tag> findByIds(String tagIds);
+
+    List<Tag> findTop(int i);
 }

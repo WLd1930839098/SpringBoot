@@ -5,7 +5,9 @@ import com.bins.dao.TagDao;
 import com.bins.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -53,5 +55,12 @@ public class TagServiceImpl implements TagService {
             }
         }
         return tagDao.findAllById(ids);
+    }
+
+    @Override
+    public List<Tag> findTop(int i) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"newsList.size");
+        Pageable pageable = PageRequest.of(0,i,sort);
+        return tagDao.findTop(pageable);
     }
 }

@@ -16,4 +16,6 @@ public interface TypeService {
     Type findById(Long id);
 
     List<Type> findAll();
+
+    List<Type> findTop(int i);
 }

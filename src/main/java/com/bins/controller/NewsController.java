@@ -1,12 +1,10 @@
 package com.bins.controller;
 
-import com.bins.bean.News;
-import com.bins.bean.Tag;
-import com.bins.bean.Type;
-import com.bins.bean.User;
+import com.bins.bean.*;
 import com.bins.service.NewsService;
 import com.bins.service.TagService;
 import com.bins.service.TypeService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,8 +39,9 @@ public class NewsController {
             direction = Sort.Direction.DESC) Pageable pageable, Model model){
 
         Page<News> page = newsService.findAll(pageable);
-
+        List<Type> types = typeService.findAll();
         model.addAttribute("page",page);
+        model.addAttribute("types",types);
 
         return "/admin/news";
     }
@@ -68,10 +67,18 @@ public class NewsController {
     @RequestMapping("input")
     public String input(News news, HttpSession session){
         List<Tag> tags = tagService.findByIds(news.getTagIds());
-        news.setTags(tags);
+        news.setTags(tags);//在t_news_tags插入数据
         User user = (User)session.getAttribute("user");
         news.setUser(user);
         newsService.add(news);
         return "redirect:/admin/news";
+    }
+
+    @RequestMapping("search")
+    public String search(@PageableDefault(size = 5,sort ={"updateTime"} ,direction = Sort.Direction.DESC)Pageable pageable,
+                         NewsQuery newsQuery, Model model){
+        Page<News> page = newsService.searchNews(pageable,newsQuery);
+        model.addAttribute("page",page);
+        return "admin/news::newsList";
     }
 }

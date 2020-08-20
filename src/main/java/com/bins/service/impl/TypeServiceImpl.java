@@ -7,7 +7,9 @@ import com.bins.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +43,12 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public List<Type> findAll() {
         return typeDao.findAll();
+    }
+
+    @Override
+    public List<Type> findTop(int i) {
+        Sort sort = Sort.by(Sort.Direction.DESC,"newsList.size");
+        Pageable pageable = PageRequest.of(0,i,sort);
+        return typeDao.findTop(pageable);
     }
 }

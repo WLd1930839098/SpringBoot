@@ -17,7 +17,7 @@ public class Type {
     private String name;
 
     @OneToMany(mappedBy = "type")
-    private List<News> news = new ArrayList<>();
+    private List<News> newsList = new ArrayList<>();
 
     public Type() {
     }
@@ -38,12 +38,12 @@ public class Type {
         this.name = name;
     }
 
-    public List<News> getNews() {
-        return news;
+    public List<News> getNewsList() {
+        return newsList;
     }
 
-    public void setNews(List<News> news) {
-        this.news = news;
+    public void setNewsList(List<News> newsList) {
+        this.newsList = newsList;
     }
 
     @Override
