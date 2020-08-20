@@ -73,24 +73,16 @@
         <tfoot>
         <tr>
           <th colspan="6">
-
             <a class="m-text"><b th:text="${page.number+1}+'/'+ ${page.totalPages}+ '页'" th:unless="${page.number >= page.totalPages}"></b></a>
-
-
             <div class="ui mini pagination menu">
-              <a  class="item" th:href="@{/admin/types(page=0)}" th:if="${page.totalPages}>1">首页</a>
-
-              <a  class="item" th:href="@{/admin/types(page=${page.number}-1)}" th:unless="${page.first}" th:if="${page.totalPages}>1">上一页</a>
-
+              <a  class="item" th:href="@{/admin/types(page=0)}" th:if="${page.totalPages}>0">首页</a>
+              <a  class="item" th:href="@{/admin/types(page=${page.number}-1)}" th:unless="${page.first}" th:if="${page.totalPages}>0">上一页</a>
               <a class="item" th:href="@{/admin/types(page=${i}-1)}"
                  th:each="i :${#numbers.sequence(1, page.totalPages)}" th:text="${i}"
               th:if="${page.totalPages>0}">
               </a>
-
-              <a  class=" item" th:href="@{/admin/types(page=${page.number}+1)}" th:unless="${page.last}" th:if="${page.totalPages}>1">下一页</a>
-
-              <a  class="  item" th:href="@{/admin/types(page=${page.totalPages-1})}" th:if="${page.totalPages}>1">尾页</a>
-
+              <a  class=" item" th:href="@{/admin/types(page=${page.number}+1)}" th:unless="${page.last}" th:if="${page.totalPages}>0">下一页</a>
+              <a  class="  item" th:href="@{/admin/types(page=${page.totalPages-1})}" th:if="${page.totalPages}>0">尾页</a>
             </div>
             <a href="#" th:href="@{/admin/types/toInput/{id}(id=-1)}" class="ui mini right floated teal basic button">新增</a>
           </th>

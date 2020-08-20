@@ -46,7 +46,7 @@ public class News {
     @OneToMany(mappedBy = "news")
     private List<Comment> comments = new ArrayList<>();
 
-    @Transient
+    @Transient      //一旦变量被transient修饰，变量将不再是对象持久化的一部分，该变量内容在序列化后无法获得访问。
     private String tagIds;
 
     private String description;

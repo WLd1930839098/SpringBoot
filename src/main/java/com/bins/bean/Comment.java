@@ -20,7 +20,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
-    @ManyToOne
+    @ManyToOne          //ManyToOne是在该表中添加一个字段
     private News news;
 
     @OneToMany(mappedBy = "parentComment")

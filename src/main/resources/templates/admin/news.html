@@ -83,6 +83,7 @@
       </div>
       <div id="table-container">
         <table th:fragment="newsList" class="ui compact teal table">
+        <!--<table th:fragment="newsList" class="ui celled table">-->
           <thead>
           <tr>
             <th></th>
@@ -90,6 +91,7 @@
             <th>类型</th>
             <th>推荐</th>
             <th>状态</th>
+            <th>创建时间</th>
             <th>更新时间</th>
             <th>操作</th>
           </tr>
@@ -101,6 +103,7 @@
             <td th:text="${news.type.name}">认知升级</td>
             <td th:text="${news.recommend} ? '是':'否'">是</td>
             <td th:text="${news.published} ? '发布':'草稿'">草稿</td>
+            <td th:text="${news.createTime}">2017-10-02 08:45</td>
             <td th:text="${news.updateTime}">2017-10-02 09:45</td>
             <td>
               <a href="#" th:href="@{/admin/news/input/{id}(id=${news.id})}" class="ui mini teal basic button">编辑</a>
@@ -110,12 +113,20 @@
           </tbody>
           <tfoot>
           <tr>
-            <th colspan="7">
+            <th colspan="8"><!--colspan 属性规定单元格可横跨的列数-->
 
-              <div class="ui mini pagination menu" th:if="${page.totalPages}>1" >
-                <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">上一页</a>
-                <a onclick="page(this)" th:attr="data-page=${page.number}+1" class=" item" th:unless="${page.last}">下一页</a>
+              <a class="m-text"><b th:text="${page.number+1}+'/'+ ${page.totalPages}+ '页'" th:unless="${page.number >= page.totalPages}"></b></a>
+              <div class="ui mini pagination menu">
+                <a  class="item" th:href="@{/admin/news(page=0)}" th:if="${page.totalPages}>0">首页</a>
+                <a  class="item" th:href="@{/admin/news(page=${page.number}-1)}" th:unless="${page.first}" th:if="${page.totalPages}>0">上一页</a>
+                <a class="item" th:href="@{/admin/news(page=${i}-1)}"
+                   th:each="i :${#numbers.sequence(1, page.totalPages)}" th:text="${i}"
+                   th:if="${page.totalPages>0}">
+                </a>
+                <a  class=" item" th:href="@{/admin/news(page=${page.number}+1)}" th:unless="${page.last}" th:if="${page.totalPages}>0">下一页</a>
+                <a  class="  item" th:href="@{/admin/news(page=${page.totalPages-1})}" th:if="${page.totalPages}>0">尾页</a>
               </div>
+
               <a href="#" th:href="@{/admin/news/input/{id}(id=-1)}" class="ui mini right floated teal basic button">新增</a>
             </th>
           </tr>
