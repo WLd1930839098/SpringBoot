@@ -81,4 +81,10 @@ public class NewsController {
         model.addAttribute("page",page);
         return "admin/news::newsList";
     }
+
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        newsService.deleteById(id);
+        return "redirect:admin/news";
+    }
 }

@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NewServiceImpl implements NewsService {
@@ -118,5 +116,26 @@ public class NewServiceImpl implements NewsService {
         Sort sort = Sort.by(Sort.Direction.DESC,"updateTime");
         Pageable pageable = PageRequest.of(0,i);
         return newsDao.findTop(pageable);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        newsDao.deleteById(id);
+    }
+
+    @Override
+    public HashMap<String, List<News>> getMap() {
+        LinkedHashMap<String,List<News>> map = new LinkedHashMap<>();
+        List<String> years = newsDao.findGroupYear();
+        for(String y:years){
+            List<News> newsList = newsDao.findNewsByYear(y);
+            map.put(y,newsList);
+        }
+        return map;
+    }
+
+    @Override
+    public Long getCount() {
+        return newsDao.count();
     }
 }

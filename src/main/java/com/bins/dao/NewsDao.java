@@ -16,4 +16,10 @@ public interface NewsDao extends JpaRepository<News,Long>, JpaSpecificationExecu
 
     @Query("select n from News n where n.recommend=true")
     List<News> findTop(Pageable pageable);
+
+    @Query("select function('date_format',n.updateTime,'%Y') as year from News n group by year order by year desc ")
+    List<String> findGroupYear();
+
+    @Query("select  n from News n where function('date_format',n.updateTime,'%Y')=?1 ")
+    List<News> findNewsByYear(String y);
 }

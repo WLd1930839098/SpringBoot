@@ -40,7 +40,7 @@
     <div class="ui container">
       <div class="right menu">
         <a href="#"  class="teal active item">发布</a>
-        <a href="#" th:href="@{/admin/newsList}" class="item">列表</a>
+        <a href="#" th:href="@{/admin/news}" class="item">列表</a>
       </div>
     </div>
   </div>
@@ -48,7 +48,7 @@
   <!--中间内容-->
   <div  class="m-container m-padded-tb-big">
     <div class="ui container">
-      <form id="newsList-form" action="#" th:object="${newsList}" th:action="@{/admin/newsList/input}" method="post" class="ui form">
+      <form id="newsList-form" action="#" th:object="${news}" th:action="@{/admin/news/input}" method="post" class="ui form">
         <input type="hidden" name="published" th:value="*{published}">
         <input type="hidden" name="id" th:value="*{id}">
         <div class="required field">

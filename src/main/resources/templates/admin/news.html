@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http:///www.w3.org/1999/xhtml">
 <head th:replace="admin/_fragments :: head(~{::title})">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,8 +38,8 @@
   <div class="ui attached pointing menu">
     <div class="ui container">
       <div class="right menu">
-        <a href="#" th:href="@{/admin/newsList/input/{id}(id=-1)}" class=" item">发布</a>
-        <a href="#" th:href="@{/admin/newsList}" class="teal active item">列表</a>
+        <a href="#" th:href="@{/admin/news/input/{id}(id=-1)}" class=" item">发布</a>
+        <a href="#" th:href="@{/admin/news}" class="teal active item">列表</a>
       </div>
     </div>
   </div>
@@ -82,7 +82,7 @@
         </div>
       </div>
       <div id="table-container">
-        <table th:fragment="newsList" class="ui compact teal table">
+        <table th:fragment="news" class="ui compact teal table">
         <!--<table th:fragment="newsList" class="ui celled table">-->
           <thead>
           <tr>
@@ -106,8 +106,8 @@
             <td th:text="${newsList.createTime}">2017-10-02 08:45</td>
             <td th:text="${newsList.updateTime}">2017-10-02 09:45</td>
             <td>
-              <a href="#" th:href="@{/admin/newsList/input/{id}(id=${newsList.id})}" class="ui mini teal basic button">编辑</a>
-              <a href="#" th:href="@{/admin/newsList/delete/{id}(id=${newsList.id})}" class="ui mini red basic button">删除</a>
+              <a href="#" th:href="@{/admin/news/input/{id}(id=${newsList.id})}" class="ui mini teal basic button">编辑</a>
+              <a href="#" th:href="@{/admin/news/delete/{id}(id=${newsList.id})}" class="ui mini red basic button">删除</a>
             </td>
           </tr>
           </tbody>
@@ -117,17 +117,17 @@
 
               <a class="m-text"><b th:text="${page.number+1}+'/'+ ${page.totalPages}+ '页'" th:unless="${page.number >= page.totalPages}"></b></a>
               <div class="ui mini pagination menu">
-                <a  class="item" th:href="@{/admin/newsList(page=0)}" th:if="${page.totalPages}>0">首页</a>
-                <a  class="item" th:href="@{/admin/newsList(page=${page.number}-1)}" th:unless="${page.first}" th:if="${page.totalPages}>0">上一页</a>
-                <a class="item" th:href="@{/admin/newsList(page=${i}-1)}"
+                <a  class="item" th:href="@{/admin/news(page=0)}" th:if="${page.totalPages}>0">首页</a>
+                <a  class="item" th:href="@{/admin/news(page=${page.number}-1)}" th:unless="${page.first}" th:if="${page.totalPages}>0">上一页</a>
+                <a class="item" th:href="@{/admin/news(page=${i}-1)}"
                    th:each="i :${#numbers.sequence(1, page.totalPages)}" th:text="${i}"
                    th:if="${page.totalPages>0}">
                 </a>
-                <a  class=" item" th:href="@{/admin/newsList(page=${page.number}+1)}" th:unless="${page.last}" th:if="${page.totalPages}>0">下一页</a>
-                <a  class="  item" th:href="@{/admin/newsList(page=${page.totalPages-1})}" th:if="${page.totalPages}>0">尾页</a>
+                <a  class=" item" th:href="@{/admin/news(page=${page.number}+1)}" th:unless="${page.last}" th:if="${page.totalPages}>0">下一页</a>
+                <a  class="  item" th:href="@{/admin/news(page=${page.totalPages-1})}" th:if="${page.totalPages}>0">尾页</a>
               </div>
 
-              <a href="#" th:href="@{/admin/newsList/input/{id}(id=-1)}" class="ui mini right floated teal basic button">新增</a>
+              <a href="#" th:href="@{/admin/news/input/{id}(id=-1)}" class="ui mini right floated teal basic button">新增</a>
             </th>
           </tr>
           </tfoot>
@@ -222,7 +222,7 @@
     });
 
     function load() {
-      $("#table-container").load(/*[[@{/admin/newsList/search}]]*/"/admin/newsList/search",{
+      $("#table-container").load(/*[[@{/admin/newsList/search}]]*/"/admin/news/search",{
         title : $("[name='title']").val(),
         typeId : $("[name='typeId']").val(),
         recommend : $("[name='recommend']").prop('checked'),

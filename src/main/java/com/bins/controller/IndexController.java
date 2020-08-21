@@ -1,9 +1,7 @@
 package com.bins.controller;
 
-import com.bins.bean.News;
-import com.bins.bean.NewsQuery;
-import com.bins.bean.Tag;
-import com.bins.bean.Type;
+import com.bins.bean.*;
+import com.bins.service.CommentService;
 import com.bins.service.NewsService;
 import com.bins.service.TagService;
 import com.bins.service.TypeService;
@@ -17,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -31,6 +31,9 @@ public class IndexController {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping
     //根路径
@@ -91,5 +94,50 @@ public class IndexController {
         List<News> newsList = newsService.findTop(3);
         model.addAttribute("lastestNewsList",newsList);
         return "_fragments::lastestNewsList1";
+    }
+
+    @RequestMapping("about")
+    public String about(){
+        return "about";
+    }
+
+    @RequestMapping("/news/{id}")
+    public String findById(@PathVariable Long id,Model model){
+
+        News news = newsService.findById(id);
+
+        model.addAttribute("news",news);
+        return "news";
+    }
+
+    @RequestMapping("/comments")
+    public String comment(Comment comment, HttpSession session){
+
+        User user = (User) session.getAttribute("user");
+        if(user==null){
+            comment.setAdminComment(false);
+        }else{
+            comment.setAdminComment(true);
+        }
+        commentService.save(comment);
+
+        return "redirect:/comments/"+comment.getNews().getId();
+    }
+
+    @RequestMapping("/comments/{newsId}")
+    public String comments(@PathVariable Long newsId,Model model){
+        List<Comment> comments = commentService.findCommentByNewsId(newsId);
+
+        model.addAttribute("comments",comments);
+        return "news::commentList";
+    }
+
+    @RequestMapping("/archives")
+    public String archives(Model model){
+        HashMap<String,List<News>> map = newsService.getMap();
+        long count = newsService.getCount();
+        model.addAttribute("archiveMap",map);
+        model.addAttribute("newsCount",count);
+        return "archives";
     }
 }
