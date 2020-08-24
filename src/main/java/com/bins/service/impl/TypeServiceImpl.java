@@ -4,6 +4,8 @@ import com.bins.bean.Type;
 import com.bins.dao.TypeDao;
 import com.bins.dao.UserDao;
 import com.bins.service.TypeService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -25,11 +27,13 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
+    @RequiresPermissions(value="user-delete")
     public void deleteById(Long id) {
         typeDao.deleteById(id);
     }
 
     @Override
+    @RequiresRoles(value = "admin")
     public void add(Type type) {
         //更新和添加都可以使用sava，若id有值则是更新；否则是添加
         typeDao.save(type);
